@@ -11,7 +11,12 @@ class ListIdRepositoryImpl @Inject constructor(
 ): ListIdRepository {
     override suspend fun fetchListIds(): Result<List<ListIdItem>> {
         try {
-            api.fetchListIds().let {
+
+            api.fetchListIds()
+                .filter { !it.name.isNullOrEmpty() }
+                .sortedBy { it.id.inc() }
+                .sortedBy { it.listId.inc() }
+                .let {
                 return Result.success(it)
             }
         }catch (e: IOException){
