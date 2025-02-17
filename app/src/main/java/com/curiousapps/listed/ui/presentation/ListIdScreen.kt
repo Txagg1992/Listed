@@ -1,6 +1,8 @@
 package com.curiousapps.listed.ui.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +20,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.curiousapps.listed.ui.presentation.component.ListIdRow
@@ -26,6 +29,7 @@ import com.curiousapps.listed.ui.presentation.component.ListIdRow
 fun ListIdScreen(
     viewModel: ListedViewModel = hiltViewModel()
 ){
+    val context = LocalContext.current
     val state by viewModel.state.collectAsState(initial = ListedViewModel.ListedState())
     val listId = state.listIdList
 
@@ -56,8 +60,13 @@ fun ListIdScreen(
             ) {
                 val itemCount = listId.size
                 items(itemCount){ index ->
+                    val name = listId[index].name
+                    val idList = listId[index].listId
                     ListIdRow(
-                        listIdItem = listId[index]
+                        listIdItem = listId[index],
+                        modifier = Modifier.clickable {
+                            Toast.makeText(context, "$idList \n$name", Toast.LENGTH_SHORT).show()
+                        }
                     )
                 }
             }
@@ -69,7 +78,7 @@ fun ListIdScreen(
 @Composable
 fun GradientBackground() {
     val gradient = Brush.linearGradient(
-        0.0f to Color.LightGray,
+        0.0f to Color.Black,
         300.0f to Color.Cyan,
         start = Offset.Zero,
         end = Offset.Infinite
