@@ -14,8 +14,8 @@ class ListIdRepositoryImpl @Inject constructor(
 
             api.fetchListIds()
                 .filter { !it.name.isNullOrEmpty() }
-                .sortedBy { it.id.inc() }
-                .sortedBy { it.listId.inc() }
+                .sortedBy { it.id }
+                .sortedBy { it.listId }
                 .let {
                 return Result.success(it)
             }
