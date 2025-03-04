@@ -6,7 +6,6 @@ import com.curiousapps.listed.domain.ListIdItem
 import com.curiousapps.listed.domain.ListIdRepository
 import com.curiousapps.listed.util.IO_DISPATCHER
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.onStart
