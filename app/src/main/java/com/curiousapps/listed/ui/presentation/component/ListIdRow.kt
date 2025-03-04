@@ -1,5 +1,6 @@
 package com.curiousapps.listed.ui.presentation.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,21 +29,25 @@ fun ListIdRow(
             .fillMaxWidth(),
         elevation = 12.dp,
         backgroundColor = Color.LightGray,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(12.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         ) {
             Text(
-                modifier = modifier.align(Alignment.Start),
+                modifier = modifier
+                    .align(Alignment.Start)
+                    .fillMaxWidth(),
                 text = "ListId: ${listIdItem.listId}" ,
                 fontSize = 20.sp
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                modifier = modifier.align(Alignment.Start),
+                modifier = modifier
+                    .align(Alignment.Start)
+                    .fillMaxWidth(),
                 text = "Name: ${listIdItem.name}",
                 fontSize = 20.sp
             )

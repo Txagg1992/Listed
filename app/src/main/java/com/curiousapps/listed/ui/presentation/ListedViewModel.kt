@@ -8,6 +8,9 @@ import com.curiousapps.listed.util.IO_DISPATCHER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,12 +21,19 @@ class ListedViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ListedState())
-    val state: Flow<ListedState>
-        get() = _state
+    val state = _state
+        .onStart { fetchListIds() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(4000L),
+            ListedState()
+        )
+//    val state: Flow<ListedState>
+//        get() = _state
 
-    init {
-        fetchListIds()
-    }
+//    init {
+//        fetchListIds()
+//    }
 
     private fun fetchListIds(){
         viewModelScope.launch(IO_DISPATCHER) {

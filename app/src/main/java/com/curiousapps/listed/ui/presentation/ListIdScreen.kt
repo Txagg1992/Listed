@@ -16,7 +16,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -28,13 +27,13 @@ import com.curiousapps.listed.ui.presentation.component.ListIdRow
 @Composable
 fun ListIdScreen(
     viewModel: ListedViewModel = hiltViewModel()
-){
+) {
     val context = LocalContext.current
     val state by viewModel.state.collectAsState(initial = ListedViewModel.ListedState())
     val listId = state.listIdList
 
     GradientBackground()
-    if (state.isLoading){
+    if (state.isLoading) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,27 +46,22 @@ fun ListIdScreen(
                 strokeCap = StrokeCap.Round
             )
         }
-    }else{
+    } else {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .padding(top = 32.dp)
+            modifier = Modifier.padding(16.dp).padding(top = 32.dp)
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize()
+                modifier = Modifier.padding(16.dp).fillMaxSize()
             ) {
                 val itemCount = listId.size
-                items(itemCount){ index ->
+                items(itemCount) { index ->
                     val name = listId[index].name
                     val idList = listId[index].listId
                     ListIdRow(
                         listIdItem = listId[index],
                         modifier = Modifier.clickable {
-                            Toast.makeText(context, "$idList \n$name", Toast.LENGTH_SHORT).show()
-                        }
-                    )
+                        Toast.makeText(context, "$idList \n$name", Toast.LENGTH_SHORT).show()
+                    })
                 }
             }
         }
@@ -80,8 +74,6 @@ fun GradientBackground() {
     val gradient = Brush.linearGradient(
         0.0f to Color.Black,
         300.0f to Color.Cyan,
-        start = Offset.Zero,
-        end = Offset.Infinite
     )
     Box(modifier = Modifier.background(gradient).fillMaxSize())
 }
